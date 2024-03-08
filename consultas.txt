@@ -1,0 +1,30 @@
+
+-- INSERTAR ACTIVO FIJO
+
+insert into activos_fijos(codigo, tipo_activo_id, descripcion)
+    value ('Lenovo',4,'segunda laptop');
+
+-- BUSCAR ACTIVO FIJO POR CODIGO
+select * from activos_fijos where codigo = 'Lenovo';
+
+-- DATOS GENERALES DE UNA ASIGNACION
+select asig.id_asignaciones as "ID", p.nombres as "Usuario", area.nombre as "Area", activof.codigo as "Activo Fijo"
+    from activos_fijos as activof inner  join asignaciones as asig on activof.id_activo_fijo = asig.activos_fijos_id inner join personas as p on asig.personas_id = p.id_persona
+    inner join areas_trabajo as area on p.areas_trabajo_id = area.id_areas_trabajo;
+
+-- ASIGNAR UN ACTIVO FIJO
+
+CREATE PROCEDURE asignarActivofijo(persona int, activo int)
+BEGIN
+    insert into asignaciones (personas_id, activos_fijos_id)
+        value (persona,activo);
+
+    insert into historial_asignaciones (fecha_asignacion, personas_id, activos_fijos_id)
+        value (CURDATE(),persona,activo);
+end;
+
+call asignarActivofijo(1,44);
+
+-- ELIMINAR ASIGNACION
+
+delete from asignaciones where id_asignaciones = 28;
