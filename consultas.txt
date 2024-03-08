@@ -28,3 +28,14 @@ call asignarActivofijo(1,44);
 -- ELIMINAR ASIGNACION
 
 delete from asignaciones where id_asignaciones = 28;
+
+-- PROCEDIMIENTO ALMACENADO CREADO PARA EJECUTARLO EN EL BACKEND
+
+CREATE PROCEDURE asignarActivof(lapersona int, elactivo int)
+BEGIN
+    INSERT INTO asignaciones(personas_id, activos_fijos_id)
+        VALUE (lapersona,elactivo);
+
+    INSERT INTO historial_asignaciones(fecha_asignacion, personas_id, activos_fijos_id)
+        VALUE (CURDATE(),lapersona,elactivo);
+end;

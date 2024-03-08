@@ -5,6 +5,14 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
+@NamedStoredProcedureQuery(
+        name = "asignarActivof",
+        procedureName = "asignarActivof",
+        parameters = {
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "lapersona",type = Integer.class),
+                @StoredProcedureParameter(mode = ParameterMode.IN, name = "elactivo",type = Integer.class)
+        }
+)
 public class Asignaciones {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
